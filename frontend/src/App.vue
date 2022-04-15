@@ -1,5 +1,9 @@
 <template>
   <h1>{{ message }}!</h1>
+  <h2>{{ count }}</h2>
+
+  <button @click="count++" id="Increment">Incrementar</button>
+  <button @click="destroyComponent">Desmontar</button>
 </template>
 
 <script lang="ts">
@@ -8,21 +12,26 @@ import { defineComponent } from 'vue'
 export default defineComponent({
   data() {
     return {
-      message: 'Hello Kaori'
+      message: 'Hello Kaori',
+      count: 0
     }
   },
-  beforeMount() {
-    console.log('Antes da Montagem')
-    console.log(this.message)
-    console.log(this.$el) // Acessa o primeiro elemento raiz e retorna null porque não tem acesso
+  beforeUnmount() {
+    console.log('Salvar a contagem no db')
   },
-  mounted() {
-    console.log('Depois da Montagem')
-    console.log(this.message)
-    console.log(this.$el) // Acessa o primeiro elemento raiz
-    this.$el.style.background = 'red' // Alteração na DOM
+  unmounted() {
+    alert('obrigado por utilizar o contador')
+  },
+  methods: {
+    destroyComponent() {
+      this.$.appContext.app.unmount(this.$el)
+    }
   }
 })
 </script>
 
-<style></style>
+<style>
+#Increment {
+  margin-right: 5px;
+}
+</style>
