@@ -11,13 +11,16 @@ export default defineComponent({
       message: 'Hello Kaori'
     }
   },
-  beforeCreate() {
-    console.log('Antes da Criação')
+  beforeMount() {
+    console.log('Antes da Montagem')
     console.log(this.message)
+    console.log(this.$el) // Acessa o primeiro elemento raiz e retorna null porque não tem acesso
   },
-  created() {
-    console.log('Depois da Criação')
+  mounted() {
+    console.log('Depois da Montagem')
     console.log(this.message)
+    console.log(this.$el) // Acessa o primeiro elemento raiz
+    this.$el.style.background = 'red' // Alteração na DOM
   }
 })
 </script>
